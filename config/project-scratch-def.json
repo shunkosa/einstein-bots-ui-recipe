@@ -1,0 +1,10 @@
+{
+  "orgName": "Demo Company",
+  "edition": "Developer",
+  "features": ["ServiceCloud","Chatbot"],
+  "settings": {
+    "orgPreferenceSettings": {
+      "s1DesktopEnabled": true
+    }
+  }
+}

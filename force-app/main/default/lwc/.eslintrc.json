@@ -1,0 +1,7 @@
+{
+  "extends": ["@salesforce/eslint-config-lwc/recommended"],
+  "rules" : {
+    "no-useless-return" : "warn",
+    "no-console" : "warn"
+  }
+}

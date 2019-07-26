@@ -1,0 +1,44 @@
+.chatMessage {
+    font-size: 0.875em;
+    max-width: 70%;
+    padding: 10px;
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+.chasitor.plainText{
+    color: #FFF; 
+    background: #0074bd;
+    margin-left: auto;
+    border-radius: 10px 10px 0;
+    float: right;
+}
+
+.agent {
+    margin-left: 40px;
+    border-radius: 10px 10px 10px 0;
+    float: left;
+}
+
+.agent.plainText {
+    color: #333;
+    background: #f4f4f4;
+}
+
+.richText {
+    border: 1px solid #AAA;
+}
+
+.richText ol li {
+    display: list-item !important;
+    list-style: circle inside !important;
+}
+
+.youtube iframe {
+    max-width: 95%;
+    border: 0;
+}
+
+.image img{
+    max-width: 95%;
+}

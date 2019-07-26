@@ -1,0 +1,30 @@
+<template>
+    <template if:false={isAgent}>
+        <div class="chatMessage chasitor plainText">{messageContent.value}</div>
+    </template>
+    <template if:true={isAgent}>
+        <template if:true={isPlainText}>
+            <div class="chatMessage agent plainText">{singleContent}</div>
+        </template>
+
+        <template if:true={isRichText}>
+            <div class="chatMessage agent richText">
+                <lightning-formatted-rich-text value={singleContent}>
+                </lightning-formatted-rich-text>
+            </div>
+        </template>
+
+        <template if:true={isYoutube}>
+            <div class="chatMessage agent youtube">
+                <iframe src={singleContent} allowfullscreen>
+                </iframe>
+            </div>
+        </template>
+
+        <template if:true={isImage}>
+            <div class="chatMessage agent image">
+                <img src={singleContent} />
+            </div>
+        </template>
+    </template>
+</template>
