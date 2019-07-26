@@ -6,7 +6,7 @@ Provides rich user interface by LWC `lightningsnapin-base-chat-message` base com
 ## How to use
 Deploy `chatMessage` lightning web component to the org and select it as custom component in embedded service setting.
 
-![](img/embeddedservice_setting.png)
+<kbd><img src="img/embeddedservice_setting.png"></kbd>
 
 If a message in Einstein Bot starts with
 * `RICH_TEXT:<RICH_TEXT_CONTENT_INCLUDING_SUPPORTED_HTML_TAGS>`, shows the message in rich text format.
