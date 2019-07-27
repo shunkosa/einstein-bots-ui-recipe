@@ -34,11 +34,17 @@
     list-style: circle inside !important;
 }
 
+.youtube,
+.image,
+.url {
+    max-width: 100%;
+}
+
 .youtube iframe {
-    max-width: 95%;
+    max-width: 100%;
     border: 0;
 }
 
 .image img{
-    max-width: 95%;
+    max-width: 100%;
 }
