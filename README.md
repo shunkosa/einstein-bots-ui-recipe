@@ -10,7 +10,7 @@ Deploy `chatMessage` lightning web component to the org and select it as custom 
 
 If a message in Einstein Bot starts with
 * `RICH_TEXT:<RICH_TEXT_CONTENT_INCLUDING_SUPPORTED_HTML_TAGS>`, shows the message in rich text format.
-* `YOUTOUBE:<YOUTUBE_VIDEO_ID>`, shows the youtube video in chat window.
+* `YOUTUBE:<YOUTUBE_VIDEO_ID>`, shows the youtube video in chat window.
 * `IMAGE:<IMAGE_URL>`, shows the image.
 * `PLAIN_TEXT:` or no prefix, shows the message in plain text format.
 
