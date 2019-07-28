@@ -1,30 +1,53 @@
 <template>
     <template if:false={isAgent}>
-        <div class="chatMessage chasitor plainText">{messageContent.value}</div>
+        <div class="chatMessage chasitor">{messageContent.value}</div>
     </template>
     <template if:true={isAgent}>
         <template if:true={isPlainText}>
-            <div class="chatMessage agent plainText">{singleContent}</div>
+            <div class="chatMessage agent plainText">
+                <lightning-formatted-rich-text value={content}>
+                </lightning-formatted-rich-text>
+            </div>
         </template>
 
         <template if:true={isRichText}>
             <div class="chatMessage agent richText">
-                <lightning-formatted-rich-text value={singleContent}>
+                <lightning-formatted-rich-text value={content}>
                 </lightning-formatted-rich-text>
             </div>
         </template>
 
         <template if:true={isYoutube}>
             <div class="chatMessage agent youtube">
-                <iframe src={singleContent} allowfullscreen>
+                <iframe src={content} allowfullscreen>
                 </iframe>
             </div>
         </template>
 
         <template if:true={isImage}>
             <div class="chatMessage agent image">
-                <img src={singleContent} />
+                <img src={content} />
             </div>
+        </template>
+
+        <template if:true={isUrl}>
+            <template if:true={hasOGPInfo}>
+                <div class="chatMessage agent url">
+                    <a href={content} target="_blank"></a>
+                    <img src={ogpMeta.image} onerror={fallback} />
+                    <div class="ogpInfo">
+                        <div class="title">{ogpMeta.title}</div>
+                        <div class="description">{ogpMeta.description}</div>
+                        <div class="site_name">{ogpMeta.site_name}</div>
+                    </div>
+                </div>
+            </template>
+            <template if:false={hasOGPInfo}>
+                <div class="chatMessage agent plainText">
+                    <lightning-formatted-rich-text value={content}>
+                    </lightning-formatted-rich-text>
+                </div>
+            </template>
         </template>
     </template>
 </template>

@@ -1,6 +1,8 @@
 import BaseChatMessage from 'lightningsnapin/baseChatMessage';
 import { track } from 'lwc';
 import getMetaProperties from '@salesforce/apex/OGPParser.getMetaProperties'
+import { loadStyle } from 'lightning/platformResourceLoader';
+import chatMessageStyle from '@salesforce/resourceUrl/chatMessageStyle';
 
 const DEFAULT_MESSAGE_PREFIX = 'PLAIN_TEXT';
 const RICHTEXT_MESSAGE_PREFIX = 'RICH_TEXT';
@@ -20,7 +22,6 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
         if (!this.isAgent) {
             return;
         }
-        console.log(this.messageContent.value);
         const messageTypePrefixPosition = SUPPORTED_MESSAGE_PREFIX.indexOf(this.messageContent.value.split(':')[0]);
         if (messageTypePrefixPosition > -1) {
             this.messageType = SUPPORTED_MESSAGE_PREFIX[messageTypePrefixPosition];
@@ -33,6 +34,9 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
         } else if (this.isImage) {
             this.content = this.extractOriginalString(contentValue);
         } else if (this.isUrl) {
+            Promise.all([
+                loadStyle(this, chatMessageStyle + '/style.css')
+            ]);
             this.content = this.extractOriginalString(contentValue);
             getMetaProperties({ url : this.content })
             .then(result => {
@@ -57,6 +61,12 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
         return generatedString;
     }
 
+    fallback(event) {
+        event.target.onerror = null;
+        event.target.style.display = 'none';
+        event.target.style.height = 0;
+    }
+
     get isAgent() {
         return this.userType === 'agent';
     }
@@ -79,5 +89,9 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
 
     get isUrl() {
         return this.messageType === URL_MESSAGE_PREFIX;
+    }
+
+    get hasOGPInfo() {
+        return this.ogpMeta.title !== undefined;
     }
 }

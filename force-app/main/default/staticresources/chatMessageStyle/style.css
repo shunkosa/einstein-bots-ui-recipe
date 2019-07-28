@@ -1,0 +1,4 @@
+.url .ogpInfo .title,
+.url .ogpInfo .description {
+    -webkit-box-orient: vertical;
+}
