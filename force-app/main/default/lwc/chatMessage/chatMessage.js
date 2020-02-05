@@ -1,6 +1,5 @@
 import BaseChatMessage from 'lightningsnapin/baseChatMessage';
 import { track } from 'lwc';
-import getMetaProperties from '@salesforce/apex/OGPParser.getMetaProperties'
 import { loadStyle } from 'lightning/platformResourceLoader';
 import chatMessageStyle from '@salesforce/resourceUrl/chatMessageStyle';
 
@@ -10,6 +9,7 @@ const YOUTUBE_MESSAGE_PREFIX = 'YOUTUBE';
 const IMAGE_MESSAGE_PREFIX = 'IMAGE';
 const URL_MESSAGE_PREFIX = 'URL'
 const SUPPORTED_MESSAGE_PREFIX = [DEFAULT_MESSAGE_PREFIX, RICHTEXT_MESSAGE_PREFIX, YOUTUBE_MESSAGE_PREFIX, IMAGE_MESSAGE_PREFIX, URL_MESSAGE_PREFIX];
+const OPENGRAPH_API_KEY = 'YOUR_OPENGRAPH_API_KEY';
 
 /**
  * Displays a chat message using the inherited api messageContent and is styled based on the inherited api userType and messageContent api objects passed in from BaseChatMessage.
@@ -38,13 +38,21 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
                 loadStyle(this, chatMessageStyle + '/style.css')
             ]);
             this.content = this.extractOriginalString(contentValue);
-            getMetaProperties({ url : this.content })
-            .then(result => {
-                this.ogpMeta = result;
+            const urlEncoded = encodeURIComponent(this.content);
+            const requestURL = 'https://opengraph.io/api/1.1/site/' + urlEncoded + '?app_id=' + OPENGRAPH_API_KEY;
+            console.log(requestURL);
+            fetch(requestURL, { method: "GET" })
+            .then(response => {
+                return response.json();
             })
-            .catch(error => {
-                console.log(error.body);
-            });
+            .then(jsonResponse => {
+                if(jsonResponse.hybridGraph) {
+                    this.ogpMeta.title = jsonResponse.hybridGraph.title;
+                    this.ogpMeta.description = jsonResponse.hybridGraph.description;
+                    this.ogpMeta.image = jsonResponse.hybridGraph.image;
+                    this.ogpMeta.site_name = jsonResponse.hybridGraph.site_name;
+                }
+            })
         } else {
             this.content = contentValue
                 .replace(/&lt;/g, '<')
