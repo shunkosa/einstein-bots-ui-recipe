@@ -27,6 +27,9 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
             this.messageType = SUPPORTED_MESSAGE_PREFIX[messageTypePrefixPosition];
         }
         const contentValue = (this.messageContent.value.split(this.messageType + ':').length === 1) ? this.messageContent.value : this.messageContent.value.split(this.messageType + ':')[1];
+        Promise.all([
+            loadStyle(this, chatMessageStyle + '/style.css')
+        ]);
         if (this.isPlainText) {
             this.content = contentValue;
         } else if (this.isYoutube) {
@@ -34,9 +37,6 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
         } else if (this.isImage) {
             this.content = this.extractOriginalString(contentValue);
         } else if (this.isUrl) {
-            Promise.all([
-                loadStyle(this, chatMessageStyle + '/style.css')
-            ]);
             this.content = this.extractOriginalString(contentValue);
             const urlEncoded = encodeURIComponent(this.content);
             const requestURL = 'https://opengraph.io/api/1.1/site/' + urlEncoded + '?app_id=' + OPENGRAPH_API_KEY;

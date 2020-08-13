@@ -29,11 +29,6 @@
     border: 1px solid #AAA;
 }
 
-.richText ol li {
-    display: list-item !important;
-    list-style: circle inside !important;
-}
-
 .youtube, .image, .url {
     max-width: 100%;
 }

@@ -2,3 +2,18 @@
 .url .ogpInfo .description {
     -webkit-box-orient: vertical;
 }
+
+.richText ol,
+.richTexxt ul {
+    padding-inline-start: 0 !important;
+}
+
+.richText ol li {
+    display: list-item !important;
+    list-style: decimal inside !important;
+}
+
+.richText ul li {
+    display: list-item !important;
+    list-style: disc inside !important;
+}
