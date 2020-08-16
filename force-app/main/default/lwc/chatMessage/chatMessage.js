@@ -27,41 +27,42 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
             this.messageType = SUPPORTED_MESSAGE_PREFIX[messageTypePrefixPosition];
         }
         const contentValue = (this.messageContent.value.split(this.messageType + ':').length === 1) ? this.messageContent.value : this.messageContent.value.split(this.messageType + ':')[1];
+        Promise.all([
+            loadStyle(this, chatMessageStyle + '/style.css')
+        ]);
         if (this.isPlainText) {
             this.content = contentValue;
         } else if (this.isYoutube) {
             this.content = 'https://www.youtube.com/embed/' + contentValue
         } else if (this.isImage) {
-            this.content = this.extractOriginalString(contentValue);
+            this.content = this.extractOriginalUrl(contentValue);
         } else if (this.isUrl) {
-            Promise.all([
-                loadStyle(this, chatMessageStyle + '/style.css')
-            ]);
-            this.content = this.extractOriginalString(contentValue);
+            this.content = this.extractOriginalUrl(contentValue);
             const urlEncoded = encodeURIComponent(this.content);
             const requestURL = 'https://opengraph.io/api/1.1/site/' + urlEncoded + '?app_id=' + OPENGRAPH_API_KEY;
-            console.log(requestURL);
             fetch(requestURL, { method: "GET" })
-            .then(response => {
-                return response.json();
-            })
-            .then(jsonResponse => {
-                if(jsonResponse.hybridGraph) {
-                    this.ogpMeta.title = jsonResponse.hybridGraph.title;
-                    this.ogpMeta.description = jsonResponse.hybridGraph.description;
-                    this.ogpMeta.image = jsonResponse.hybridGraph.image;
-                    this.ogpMeta.site_name = jsonResponse.hybridGraph.site_name;
-                }
-            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsonResponse => {
+                    if(jsonResponse.hybridGraph) {
+                        this.ogpMeta.title = jsonResponse.hybridGraph.title;
+                        this.ogpMeta.description = jsonResponse.hybridGraph.description;
+                        this.ogpMeta.image = jsonResponse.hybridGraph.image;
+                        this.ogpMeta.site_name = jsonResponse.hybridGraph.site_name;
+                    }
+                })
         } else {
             this.content = contentValue
                 .replace(/&lt;/g, '<')
                 .replace(/&gt;/g, '>')
-                .replace(/&quot;/g, '\\"');
+                .replace(/&quot;/g, '\"')
+                .replace(/<a href='/g, '')
+                .replace(/' target='_blank'.*?<\/a>.*?<\/a>/g, '');
         }
     }
 
-    extractOriginalString(generatedString) {
+    extractOriginalUrl(generatedString) {
         const matched = generatedString.match(/<a href.+>(.*?)<\/a>/);
         if (matched.length > 1) {
             return matched[1];
