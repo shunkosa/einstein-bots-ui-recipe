@@ -59,6 +59,7 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
                 .replace(/&quot;/g, '\"')
                 .replace(/<a href='mailto:.*?' target='_blank'>(.*?)<\/a>/g, '$1')
                 .replace(/<a href='/g, '')
+                .replace(/' target='_blank'.*?<\/a>( +)/g, '$1')
                 .replace(/' target='_blank'.*?<\/a>.*?<\/a>/g, '');
         }
     }
