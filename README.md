@@ -23,3 +23,4 @@ If a message in Einstein Bot starts with
 * [OpenGraph.io](https://www.opengraph.io/) is used to fetch OGP data. Make sure to create your api key and to add the CSP setting. And text truncation is [not supported in Internet Explorer](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp).
 * Standard CSS selector is not applied to custom message component. Be careful for the layout skew.
 * URL in bot message is automatically converted to string contains `<a>` tag. For example, if a bot message is `https://www.google.com`, in custom component, `messageContent.value` will be `<a href="https//www.google.com">https://www.google.com</a>`. So `extractOriginalUrl` method returns the original url without `<a>` tag.
+* For `RICH_TEXT`, to avoid unnecessary spacing, HTML tags should be expressed without line break in a diaglog message.
