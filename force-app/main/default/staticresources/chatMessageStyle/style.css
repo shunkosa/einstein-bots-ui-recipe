@@ -1,3 +1,7 @@
+.chasitor lightning-formatted-rich-text span a {
+    color: #FFF;
+}
+
 .url .ogpInfo .title,
 .url .ogpInfo .description {
     -webkit-box-orient: vertical;

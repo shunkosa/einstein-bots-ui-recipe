@@ -1,6 +1,9 @@
 <template>
     <template if:false={isAgent}>
-        <div class="chatMessage chasitor">{messageContent.value}</div>
+        <div class="chatMessage chasitor">
+            <lightning-formatted-rich-text value={messageContent.value}>   
+            </lightning-formatted-rich-text>
+        </div>
     </template>
     <template if:true={isAgent}>
         <template if:true={isPlainText}>
