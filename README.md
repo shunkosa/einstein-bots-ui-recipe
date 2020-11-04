@@ -19,8 +19,15 @@ If a message in Einstein Bot starts with
 <img src="img/message_examples.png" width="600">
 
 ## Notice
-* Custom attributes cannot be passed to lightning web component. So in this repository, using prefix rule to decide the type of content.
-* [OpenGraph.io](https://www.opengraph.io/) is used to fetch OGP data. Make sure to create your api key and to add the CSP setting. And text truncation is [not supported in Internet Explorer](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp).
+* Custom attributes cannot be passed from Einstein Bots to lightning web component. So in this repository, using prefix rule to decide the type of content.
+
+### URL Content
+* [OpenGraph.io](https://www.opengraph.io/) is used to fetch OGP data. Make sure to create your api key and to add the CSP setting.
+* Notice that text truncation used in this component is [not supported in Internet Explorer](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp).
+
+### Rich Text Content
+* To avoid unnecessary spacing, HTML tags should be expressed without line break in a dialog message.
+* URL in bot message is automatically converted to string contains `<a>` tag. For example, if a bot message is `https://www.google.com`, in custom component, `messageContent.value` will be `<a href="https//www.google.com">https://www.google.com</a>`. This is Salesforce embedded behavior. So `extractOriginalUrl` method returns the original url without `<a>` tag.
+
+### Component style
 * Standard CSS selector is not applied to custom message component. Be careful for the layout skew.
-* URL in bot message is automatically converted to string contains `<a>` tag. For example, if a bot message is `https://www.google.com`, in custom component, `messageContent.value` will be `<a href="https//www.google.com">https://www.google.com</a>`. So `extractOriginalUrl` method returns the original url without `<a>` tag.
-* For `RICH_TEXT`, to avoid unnecessary spacing, HTML tags should be expressed without line break in a diaglog message.
