@@ -12,6 +12,7 @@ If a message in Einstein Bot starts with
 * `RICH_TEXT:<RICH_TEXT_CONTENT_INCLUDING_SUPPORTED_HTML_TAGS>`, shows the message in rich text format.
 * `YOUTUBE:<YOUTUBE_VIDEO_ID>`, shows the youtube video in chat window.
 * `IMAGE:<IMAGE_URL>`, shows the image.
+* `NAVIGATE:<TARGET_URL>` opens the url with a new browser window (tab).
 * `URL:<TARGET_URL>` shows the OGP info.
 * `PLAIN_TEXT:<MESSAGE>` or no prefix, shows the message in plain text format.
 

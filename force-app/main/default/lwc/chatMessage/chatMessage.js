@@ -8,7 +8,8 @@ const RICHTEXT_MESSAGE_PREFIX = 'RICH_TEXT';
 const YOUTUBE_MESSAGE_PREFIX = 'YOUTUBE';
 const IMAGE_MESSAGE_PREFIX = 'IMAGE';
 const URL_MESSAGE_PREFIX = 'URL'
-const SUPPORTED_MESSAGE_PREFIX = [DEFAULT_MESSAGE_PREFIX, RICHTEXT_MESSAGE_PREFIX, YOUTUBE_MESSAGE_PREFIX, IMAGE_MESSAGE_PREFIX, URL_MESSAGE_PREFIX];
+const NAVIGATE_MESSAGE_PREFIX = 'NAVIGATE';
+const SUPPORTED_MESSAGE_PREFIX = [DEFAULT_MESSAGE_PREFIX, RICHTEXT_MESSAGE_PREFIX, YOUTUBE_MESSAGE_PREFIX, IMAGE_MESSAGE_PREFIX, URL_MESSAGE_PREFIX, NAVIGATE_MESSAGE_PREFIX];
 const OPENGRAPH_API_KEY = 'YOUR_OPENGRAPH_API_KEY';
 
 /**
@@ -34,6 +35,10 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
             this.content = contentValue;
         } else if (this.isYoutube) {
             this.content = 'https://www.youtube.com/embed/' + contentValue
+        } else if (this.isNavigate) {
+            const url = this.extractOriginalUrl(contentValue);
+            window.open(url);
+            this.content = `Opening ${url}`;
         } else if (this.isImage) {
             this.content = this.extractOriginalUrl(contentValue);
         } else if (this.isUrl) {
@@ -100,6 +105,10 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
 
     get isUrl() {
         return this.messageType === URL_MESSAGE_PREFIX;
+    }
+
+    get isNavigate() {
+        return this.messageType === NAVIGATE_MESSAGE_PREFIX;
     }
 
     get hasOGPInfo() {
