@@ -38,7 +38,7 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
         } else if (this.isNavigate) {
             const url = this.extractOriginalUrl(contentValue);
             window.open(url);
-            this.content = `Opening ${url}`;
+            this.content = '';
         } else if (this.isImage) {
             this.content = this.extractOriginalUrl(contentValue);
         } else if (this.isUrl) {
