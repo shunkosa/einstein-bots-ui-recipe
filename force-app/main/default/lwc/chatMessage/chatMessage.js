@@ -29,7 +29,6 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
             this.messageType = SUPPORTED_MESSAGE_PREFIX[messageTypePrefixPosition];
         }
         const contentValue = (this.messageContent.value.split(this.messageType + ':').length === 1) ? this.messageContent.value : this.messageContent.value.split(this.messageType + ':')[1];
-        console.log('This is the contenevalue' + this.contentValue);
         Promise.all([
             loadStyle(this, chatMessageStyle + '/style.css')
         ]);
@@ -83,7 +82,6 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
     }
 
     fallback(event) {
-        console.log(event);
         event.target.onerror = null;
         event.target.style.display = 'none';
         event.target.style.height = 0;
