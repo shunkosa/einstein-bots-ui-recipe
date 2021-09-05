@@ -27,6 +27,13 @@
             </div>
         </template>
 
+        <template if:true={isVimeo}>
+            <div class="chatMessage agent youtube">
+                <iframe src={content} allowfullscreen>
+                </iframe>
+            </div>
+        </template>
+
         <template if:true={isImage}>
             <div class="chatMessage agent image">
                 <img src={content} />
