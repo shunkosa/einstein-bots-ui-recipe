@@ -9,7 +9,8 @@ const YOUTUBE_MESSAGE_PREFIX = 'YOUTUBE';
 const IMAGE_MESSAGE_PREFIX = 'IMAGE';
 const URL_MESSAGE_PREFIX = 'URL'
 const NAVIGATE_MESSAGE_PREFIX = 'NAVIGATE';
-const SUPPORTED_MESSAGE_PREFIX = [DEFAULT_MESSAGE_PREFIX, RICHTEXT_MESSAGE_PREFIX, YOUTUBE_MESSAGE_PREFIX, IMAGE_MESSAGE_PREFIX, URL_MESSAGE_PREFIX, NAVIGATE_MESSAGE_PREFIX];
+const VIMEO_MESSAGE_PREFIX = 'VIMEO';
+const SUPPORTED_MESSAGE_PREFIX = [DEFAULT_MESSAGE_PREFIX, RICHTEXT_MESSAGE_PREFIX, YOUTUBE_MESSAGE_PREFIX, IMAGE_MESSAGE_PREFIX, URL_MESSAGE_PREFIX, NAVIGATE_MESSAGE_PREFIX, VIMEO_MESSAGE_PREFIX];
 const OPENGRAPH_API_KEY = 'YOUR_OPENGRAPH_API_KEY';
 
 /**
@@ -28,6 +29,7 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
             this.messageType = SUPPORTED_MESSAGE_PREFIX[messageTypePrefixPosition];
         }
         const contentValue = (this.messageContent.value.split(this.messageType + ':').length === 1) ? this.messageContent.value : this.messageContent.value.split(this.messageType + ':')[1];
+        console.log('This is the contenevalue' + this.contentValue);
         Promise.all([
             loadStyle(this, chatMessageStyle + '/style.css')
         ]);
@@ -35,6 +37,9 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
             this.content = contentValue;
         } else if (this.isYoutube) {
             this.content = 'https://www.youtube.com/embed/' + contentValue
+        }
+        else if (this.isVimeo) {
+            this.content = 'https://player.vimeo.com/video/' + contentValue
         } else if (this.isNavigate) {
             const url = this.extractOriginalUrl(contentValue);
             window.open(url);
@@ -78,6 +83,7 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
     }
 
     fallback(event) {
+        console.log(event);
         event.target.onerror = null;
         event.target.style.display = 'none';
         event.target.style.height = 0;
@@ -111,6 +117,9 @@ export default class ChatMessageDefaultUI extends BaseChatMessage {
         return this.messageType === NAVIGATE_MESSAGE_PREFIX;
     }
 
+    get isVimeo() {
+        return this.messageType === VIMEO_MESSAGE_PREFIX;
+    }
     get hasOGPInfo() {
         return this.ogpMeta.title !== undefined;
     }
